@@ -4,13 +4,24 @@ from pathlib import Path
 data_path = Path(__file__).parent / "data"
 
 df = pd.read_json(data_path / "orders.json")
+# product, quantity, price and total price
+# Function to print order details
+def print_order_details(order):
+    print(f"Order ID: {order['order_id']}")
+    total_price = 0
+    for product in order['products']:
+        product_name = product['name']
+        quantity = product['quantity']
+        price = product['price']
+        total = quantity * price
+        total_price += total
+        print(f"Product: {product_name:<20} Quantity: {quantity:<5} Price: {price:<10.2f}")
+    print(f"Total price: {total_price:.2f}\n")
 
-print(f"Input: {df}")
+# Iterate through orders and print details
+df.apply(print_order_details, axis=1)
 
-# Do a for-loop to iterate through each order
-
-# Input: {'order_id': 'ORD-1009', 'customer': 'George Clark', 'products': [{'name': 'Smartwatch', 'price': 199.99, 'quantity': 1}, {'name': 'USB-C Cable', 'price': 14.99, 'quantity': 2}, {'name': 'Iphone 15', 'price': 600.99, 'quantity': 1}], 'order_date': '2024-01-17', 'status': 'Processing'}
-# Product: Smartwatch           Quantity: 1                    Price: 199.99              
-# Product: USB-C Cable          Quantity: 2                    Price: 14.99               
-# Product: Iphone 15            Quantity: 1                    Price: 600.99              
-# Total price: 830.96
+# df['total_cost'] = df['products'].apply(lambda x: sum(item['price'] * item['quantity'] for item in x))
+# df['product_count'] = df['products'].apply(lambda x: len(x))
+# df['product_names'] = df['products'].apply(lambda x: [item['name'] for item in x])
+# print(df[['order_id','total_cost', 'customer', 'product_count', 'product_names']])
