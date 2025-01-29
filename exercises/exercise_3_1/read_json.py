@@ -20,8 +20,3 @@ def print_order_details(order):
 
 # Iterate through orders and print details
 df.apply(print_order_details, axis=1)
-
-# df['total_cost'] = df['products'].apply(lambda x: sum(item['price'] * item['quantity'] for item in x))
-# df['product_count'] = df['products'].apply(lambda x: len(x))
-# df['product_names'] = df['products'].apply(lambda x: [item['name'] for item in x])
-# print(df[['order_id','total_cost', 'customer', 'product_count', 'product_names']])
