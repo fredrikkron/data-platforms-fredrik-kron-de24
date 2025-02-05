@@ -1,6 +1,6 @@
 SELECT
     utbildningsnamn,
-    "utbildningsanordnare administrativ enhet" AS skola
+    "utbildningsanordnare administrativ enhet" AS school
 INTO 
     a
 FROM

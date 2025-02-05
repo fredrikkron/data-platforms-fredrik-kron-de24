@@ -1,6 +1,6 @@
 SELECT
     utbildningsnamn,
-    "utbildningsanordnare administrativ enhet" AS skola,
+    "utbildningsanordnare administrativ enhet" AS school,
     beslut INTO b
 FROM
     myh_2024
