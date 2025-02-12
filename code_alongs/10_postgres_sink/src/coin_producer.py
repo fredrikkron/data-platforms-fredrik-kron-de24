@@ -1,28 +1,9 @@
 import time
 from quixstreams import Application
-from constants import COINMARKET_API
-from requests import Session, TooManyRedirects, Timeout
-import json
-
-def get_latest_coin_data(symbol="BTC"):
-    API_KEY = COINMARKET_API
-    url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest"
-    parameters = {
-        "symbol": symbol, 
-        "convert": "USD"
-    }
-    headers = {
-        "Accepts": "application/json",
-        "X-CMC_PRO_API_KEY": API_KEY,
-    }
-    session = Session()
-    session.headers.update(headers)
-
-    try:
-        response = session.get(url, params=parameters)
-        return json.loads(response.text).get("data").get(symbol)
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-        print(e)
+# from constants import COINMARKET_API
+# from requests import Session, TooManyRedirects, Timeout
+# import json
+from connect_api import get_latest_coin_data
 
 
 def main():
@@ -45,7 +26,7 @@ def main():
                 topic=coins_topic.name, key=kafka_message.key, value=kafka_message.value
             )
 
-            time.sleep(10)
+            time.sleep(30)
 
 
 if __name__ == "__main__":
