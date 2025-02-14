@@ -9,18 +9,26 @@ from constants import (
 from sqlalchemy import create_engine
 import pandas as pd
 
-
 connection_string = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DBNAME}"
 
 engine = create_engine(connection_string)
 
-query = "SELECT * FROM bitcoin;"
+def load_data(query):
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn)
+    return df
 
-with engine.connect() as conn:
-    df = pd.read_sql(query, conn)
 
-st.markdown("# Bitcoin data")
+def layout():
+    df = load_data("SELECT * FROM bitcoin;")
 
-st.markdown("## Latest data")
+    st.markdown("# Bitcoin data")
 
-st.dataframe(df.tail())
+    st.markdown("## Latest data")
+
+    st.markdown("Latest data directly from postgres database in a docker container")
+
+    st.dataframe(df.tail())
+
+if __name__ == "__main__":
+    layout()
