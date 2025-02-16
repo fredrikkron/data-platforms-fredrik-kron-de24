@@ -32,21 +32,23 @@ def layout():
 
     st.markdown("Latest data directly from postgres database in a docker container")
 
-    st.dataframe(df.tail())
+    st.dataframe(df)
 
     st.markdown("## Bitcoin latest price in USD")
 
     # plotting code
 
-    price_chart = line_chart(
-        df["timestamp"],
-        df["price_usd"],
-        title="price USD for bitcoin",
-        xlabel="time",
-        ylabel="USD",
-    )
+    # price_chart = line_chart(
+    #     df["timestamp"],
+    #     df["price_usd"],
+    #     title="price USD for bitcoin",
+    #     xlabel="time",
+    #     ylabel="USD",
+    # )
 
-    st.pyplot(price_chart)
+    price_chart = line_chart(x=df.index, y=df["price_usd"], title="price USD")
+
+    st.pyplot(price_chart, bbox_inches="tight")
 
 
 if __name__ == "__main__":
